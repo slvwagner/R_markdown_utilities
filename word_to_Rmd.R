@@ -14,18 +14,23 @@ source("word_to_Rmarkdown_function.R")
 c_Rmd <- create_Rmd(df_doc, T)
 
 
-# microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
+microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
 
+
+# write created markdown file  
 c_Rmd|>
   write(paste0("output/",c_filename,".Rmd"))
 
+# render html file 
 rmarkdown::render(paste0("output/",c_filename,".Rmd"), 
                   c("html_document"))
 
+# show html in web browser
 browseURL(paste0("output/",c_filename,".html"))
 
+
 rmarkdown::render(paste0("output/",c_filename,".Rmd"), 
-                  c("html_document", "pdf_document","word_document"))
+                  c("pdf_document","word_document"))
 
 # ############################################################################
 # 
