@@ -49,6 +49,12 @@ create_Rmd <- function(df_doc, tc = TRUE) {
       c_table_of_content[[cnt]] <- paste0("\n","[",df_doc$text[ii],"]","(#",df_doc$text[ii],")")
       cnt <- cnt + 1
     }
+    else if (df_doc$style_name[ii] == "heading 6"){
+      first_paragraph <- T
+      c_md[ii] <- paste0("\n###### ",df_doc$text[ii],"<a name=\"",df_doc$text[ii],"\"></a>")
+      c_table_of_content[[cnt]] <- paste0("\n","[",df_doc$text[ii],"]","(#",df_doc$text[ii],")")
+      cnt <- cnt + 1
+    }
   }
   if(tc){
     c_md <- c(c_md[1],
