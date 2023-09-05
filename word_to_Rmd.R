@@ -1,66 +1,31 @@
 library(officer)
 
-document <- read_docx("test.docx")
-str(document)
+# load file
+c_filename <- "test" # word document file name with no file extension 
+document <- read_docx(paste0("input/",c_filename,".docx"))
+# str(document)
 
 # creata a data frame from word document
 df_doc <- officer::docx_summary(document)
-df_doc
+# df_doc
 
-create_Rmd <- function(df_doc) {
-  c_md <- ""
-  first_paragraph <- TRUE
-  for (ii in 1:nrow(df_doc)) {
-    if(is.na(df_doc$style_name[ii])){
-      if(first_paragraph)  {
-        c_md[ii] <- df_doc$text[ii]|>paste0("  \\")
-        first_paragraph <- FALSE
-        }
-      else {
-        c_md[ii] <- df_doc$text[ii]|>paste0("  \\")
-        }
-    }
-    else if (df_doc$style_name[ii] == "Title"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("---\ntitle: ","\"",df_doc$text[ii],
-                            "\"\nauthor: \"",document$doc_properties$data["creator","value"],
-                            "\"\ndate: \"",Sys.Date(),"\"\noutput:\n    html_document: default\n    word_document: default\n    pdf_document: default\n---")
-    }
-    else if (df_doc$style_name[ii] == "heading 1"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("\n# ",df_doc$text[ii])
-    }
-    else if (df_doc$style_name[ii] == "heading 2"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("\n## ",df_doc$text[ii])
-    }
-    else if (df_doc$style_name[ii] == "heading 3"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("\n### ",df_doc$text[ii])
-    }
-    else if (df_doc$style_name[ii] == "heading 4"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("\n#### ",df_doc$text[ii])
-    }
-    else if (df_doc$style_name[ii] == "heading 5"){
-      first_paragraph <- T
-      c_md[ii] <- paste0("\n##### ",df_doc$text[ii])
-    }
-  }
-  return(c_md)
-}
+# create Rmarkdown file from word document
+source("word_to_Rmarkdown_function.R")
+c_Rmd <- create_Rmd(df_doc, T)
 
-microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
 
-c_filename <- "test_" # word document file name with no file extension 
+# microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
 
-create_Rmd(df_doc)|>
-  write(paste0(c_filename,".Rmd"))
+c_Rmd|>
+  write(paste0("output/",c_filename,".Rmd"))
 
-rmarkdown::render(paste0(c_filename,".Rmd"), 
+rmarkdown::render(paste0("output/",c_filename,".Rmd"), 
+                  c("html_document"))
+
+browseURL(paste0("output/",c_filename,".html"))
+
+rmarkdown::render(paste0("output/",c_filename,".Rmd"), 
                   c("html_document", "pdf_document","word_document"))
-
-browseURL(paste0(c_filename,".html"))
 
 # ############################################################################
 # 
