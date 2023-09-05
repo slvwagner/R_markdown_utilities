@@ -1,5 +1,3 @@
-library(rebus)
-library(stringr)
 
 r_tbl_contents <- function(FileName) {
   
@@ -60,9 +58,6 @@ r_tbl_contents <- function(FileName) {
       tbl_contents[ii] <- paste0(c_add[6],tbl_contents[ii])
     }
   }
-  for (ii in tbl_contents) cat(paste0("\n",ii))
-  
-  # creat links
   
   # put anchor to all headings
   c_Rmd <- ifelse(stringr::str_detect(c_Rmd, p), paste0(c_Rmd, "<a name=\"",c_Rmd|>stringr::str_remove_all("#")|>stringr::str_trim(),"\"></a>"), c_Rmd)
@@ -83,6 +78,9 @@ r_tbl_contents <- function(FileName) {
              c_Rmd[c_start:length(c_Rmd)])
   return(c_Rmd)
 }
+
+library(rebus)
+library(stringr)
 
 
 c_FileName <- "test"
