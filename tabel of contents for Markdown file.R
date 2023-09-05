@@ -3,7 +3,7 @@ library(stringr)
 
 contents_tbl <- function(Rmd_doc) {
   # read markdown file 
-  c_Rmd <- readLines("output/test.Rmd")
+  c_Rmd <- readLines("input/test.Rmd")
   c_Rmd
   # regex search pattern 
   p <- c(START%R%"#")
