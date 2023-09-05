@@ -9,7 +9,7 @@ contents_tbl <- function(FileName) {
   # regex search pattern 
   p <- c(START%R%"#")
   
-  # find positon to insert tabel of contents
+  # find position to insert table of contents
   for(ii in 1:length(c_Rmd)){
     if(str_detect(c_Rmd[ii],p)) {
       c_start <- ii
