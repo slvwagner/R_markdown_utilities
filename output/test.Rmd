@@ -1,5 +1,5 @@
 ---
-title: "Titel"
+title: "Rmarkdown input"
 author: "Florian Wagner"
 date: "2023-09-05"
 output:
@@ -10,16 +10,16 @@ output:
 
 
 # Tabel of Content
-[Heading1](#Heading1)  \
-[Hading1.1](#Hading1.1)  \
-[Heading2](#Heading2)  \
-[Heading2.1](#Heading2.1)  \
-[Heading2.1.1](#Heading2.1.1)  \
-[Heading2.1.2](#Heading2.1.2)  \
-[Heading2.1.1.1](#Heading2.1.1.1)  \
-[Heading2.1.1.2](#Heading2.1.1.2)  \
-[Heading 2.2](#Heading 2.2)  \
-[Hading 2.2.2](#Hading 2.2.2)  \
+* [Heading1](#Heading1)
+    + [Hading1.1](#Hading1.1)
+* [Heading2](#Heading2)
+    + [Heading2.1](#Heading2.1)
+        + [Heading2.1.1](#Heading2.1.1)
+        + [Heading2.1.2](#Heading2.1.2)
+            + [Heading2.1.1.1](#Heading2.1.1.1)
+            + [Heading2.1.1.2](#Heading2.1.1.2)
+    + [Heading 2.2](#Heading 2.2)
+        + [Hading 2.2.2](#Hading 2.2.2)
 
 
 # Heading1<a name="Heading1"></a>

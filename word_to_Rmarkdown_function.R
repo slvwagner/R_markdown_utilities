@@ -52,7 +52,7 @@ create_Rmd <- function(df_doc, tc = TRUE) {
     else if (df_doc$style_name[ii] == "heading 6"){
       first_paragraph <- T
       c_md[ii] <- paste0("\n###### ",df_doc$text[ii],"<a name=\"",df_doc$text[ii],"\"></a>")
-      c_table_of_content[[cnt]] <- paste0("\n","                + ","[",df_doc$text[ii],"]","(#",df_doc$text[ii],")")
+      c_table_of_content[[cnt]] <- paste0("\n","                    + ","[",df_doc$text[ii],"]","(#",df_doc$text[ii],")")
       cnt <- cnt + 1
     }
   }
