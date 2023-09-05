@@ -13,7 +13,7 @@ r_tbl_contents <- function(FileName) {
   c_struct
   
   # table of contents 
-  tbl_contents <- c_struct|>stringr::str_remove_all("#")|>stringr::str_split("<", simplify = T)|>str_trim()
+  tbl_contents <- c_struct|>stringr::str_remove_all("#")|>stringr::str_split("<", simplify = T)|>stringr::str_trim()
   # create links
   tbl_contents <- paste0("[",tbl_contents,"]","(#",tbl_contents,")")
   
@@ -38,23 +38,23 @@ r_tbl_contents <- function(FileName) {
   # create table of contents
   # first_heading <- TRUE
   for (ii in 1:length(tbl_contents)) {
-    if(str_detect(c_struct[ii],c_detect[1]) ){
+    if(stringr::str_detect(c_struct[ii],c_detect[1]) ){
       tbl_contents[ii] <- paste0(c_add[1],tbl_contents[ii])
       # first_heading <- FALSE
     }
-    else if(str_detect(c_struct[ii],c_detect[2])){
+    else if(stringr::str_detect(c_struct[ii],c_detect[2])){
       tbl_contents[ii] <- paste0(c_add[2],tbl_contents[ii])
     }
-    else if(str_detect(c_struct[ii],c_detect[3])){
+    else if(stringr::str_detect(c_struct[ii],c_detect[3])){
       tbl_contents[ii] <- paste0(c_add[3],tbl_contents[ii])
     }
-    else if(str_detect(c_struct[ii],c_detect[4])){
+    else if(stringr::str_detect(c_struct[ii],c_detect[4])){
       tbl_contents[ii] <- paste0(c_add[4],tbl_contents[ii])
     }
-    else if(str_detect(c_struct[ii],c_detect[5])){
+    else if(stringr::str_detect(c_struct[ii],c_detect[5])){
       tbl_contents[ii] <- paste0(c_add[5],tbl_contents[ii])
     }
-    else if(str_detect(c_struct[ii],c_detect[6])){
+    else if(stringr::str_detect(c_struct[ii],c_detect[6])){
       tbl_contents[ii] <- paste0(c_add[6],tbl_contents[ii])
     }
   }
@@ -78,10 +78,6 @@ r_tbl_contents <- function(FileName) {
              c_Rmd[c_start:length(c_Rmd)])
   return(c_Rmd)
 }
-
-library(rebus)
-library(stringr)
-
 
 c_FileName <- "test"
 c_Rmd <- r_tbl_contents(paste0("input/",c_FileName, ".Rmd"))
