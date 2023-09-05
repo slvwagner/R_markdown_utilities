@@ -34,8 +34,12 @@ contents_tbl <- function(FileName) {
 }
 
 c_FileName <- "test"
-c_Rmd <- contents_tbl(paste0("input/",c_FileName, ".Rmd"))
+c_Rmd <- slvwagner::r_tbl_contents(paste0("input/",c_FileName, ".Rmd"))
 c_Rmd
+
+# write created markdown file  
+c_Rmd|>
+  write(paste0("output/",c_FileName, ".Rmd"))
 
 # write created markdown file  
 c_Rmd|>
