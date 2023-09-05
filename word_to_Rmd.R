@@ -21,6 +21,8 @@ c_Rmd|>
 rmarkdown::render(paste0("output/",c_filename,".Rmd"), 
                   c("html_document"))
 
+
+
 # show html in web browser
 browseURL(paste0("output/",c_filename,".html"))
 
