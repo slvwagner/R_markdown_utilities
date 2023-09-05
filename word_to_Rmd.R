@@ -13,10 +13,6 @@ df_doc <- officer::docx_summary(document)
 source("word_to_Rmarkdown_function.R")
 c_Rmd <- create_Rmd(df_doc, T)
 
-
-microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
-
-
 # write created markdown file  
 c_Rmd|>
   write(paste0("output/",c_filename,".Rmd"))
@@ -33,6 +29,8 @@ rmarkdown::render(paste0("output/",c_filename,".Rmd"),
                   c("pdf_document","word_document"))
 
 # ############################################################################
+# microbenchmark::microbenchmark(create_Rmd(df_doc), times = 100)
+
 # 
 # pinst <- plot_instr({
 #   z <- c(rnorm(100), rnorm(50, mean = 5))
