@@ -25,15 +25,13 @@ plot <- ggplot(data, aes(x = Philosopher, y = Influence_Score, fill = Philosophe
 ####################################################################
 c_filename <- "Doc1" # word document file name with no file extension 
 
-document <- read_docx(paste0("input/",c_filename,".docx"))
-docx_summary(document)
-
 ####################################################################
 # test 1
+document <- read_docx(paste0("input/",c_filename,".docx"))
+docx_summary(document)
 doc1 <- document|>
   cursor_reach("Graph1") |>
-  body_replace_all_text(old_value = "Graph", new_value = "Abbildung",
-                        only_at_cursor = FALSE, warn = TRUE, fixed = TRUE)
+  body_replace_all_text(old_value = "Graph", new_value = "Abbildung")
 
 docx_summary(doc1)
 
@@ -46,8 +44,7 @@ docx_summary(document)
 
 doc2 <- document|>
   cursor_reach("Graph1") |>
-  body_replace_all_text(old_value = "Graph", new_value = "Abbildung",
-                        only_at_cursor = FALSE, warn = TRUE, fixed = TRUE)|>
+  body_replace_all_text(old_value = "Graph", new_value = "Abbildung")|>
   cursor_backward()|>
   officer::body_remove()|>
   cursor_backward()|>
