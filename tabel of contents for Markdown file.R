@@ -1,18 +1,12 @@
-
-r_tbl_contents <- function(FileName) {
-  
-  # read markdown file
-  c_Rmd <- suppressWarnings(readLines(FileName))
-  c_Rmd
-
+r_tbl_contents <- function(c_Rmd) {
   # regex search pattern
   p <- "^#"
-
+  
   # find structure
   c_struct <- c_Rmd[stringr::str_detect(c_Rmd, p)]
   c_struct
   
-  # table of contents 
+  # table of contents
   tbl_contents <- c_struct|>stringr::str_remove_all("#")|>stringr::str_split("<", simplify = T)|>stringr::str_trim()
   # create links
   tbl_contents <- paste0("[",tbl_contents,"]","(#",tbl_contents,")")
@@ -24,10 +18,10 @@ r_tbl_contents <- function(FileName) {
                 "^####\\s",
                 "^#####\\s",
                 "^######\\s"
-                )
+  )
   
   # Structure string
-  c_add <- c("* ", 
+  c_add <- c("* ",
              "    + ",
              "        + ",
              "            + ",
@@ -80,7 +74,14 @@ r_tbl_contents <- function(FileName) {
 }
 
 c_FileName <- "test"
-c_Rmd <- r_tbl_contents(paste0("input/",c_FileName, ".Rmd"))
+
+c_Rmd <- paste0("input/",c_FileName, ".Rmd")|>
+  readLines()|>
+  r_tbl_contents()|>
+  suppressWarnings()
+c_Rmd
+
+c_Rmd <- slvwagner::r_tbl_contents(paste0("input/",c_FileName, ".Rmd"))
 c_Rmd
 
 # write created markdown file  
