@@ -61,9 +61,6 @@ docx_summary(document)
 
 print(doc2, target = "output/ausgabe1.docx")
 
-
-
-
 # ######################################################################
 # # Loading Libraries
 # library(officer)
