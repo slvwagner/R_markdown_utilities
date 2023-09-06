@@ -8,34 +8,34 @@ output:
     pdf_document: default
 ---
 
-# Heading1
+# Heading
 Das gehört zu Heading1. Das ist so korrekt.  \
 Das war ein Enter (Paragraph)  \
 
-## Hading1.1
+## Hading
 Das gehört zu Heading1.2 und somit auch korrekt.  \
 
-# Heading2
+# Heading
 Lllljjjdkkdkkd  \
 
-## Heading2.1
+## Heading
 Kljsdklfjlksdf  \
 
-### Heading2.1.1
+### Heading
 Jkljlsdfljklkljjkldasfölölkölsdf. Kjkldjskljkldjf  \
 
-### Heading2.1.2
+### Heading
 745684564dfgdfg  \
 dfgskljkljkldgf  \
 
-#### Heading2.1.1.1
+#### Heading
 Jlksdjflkdjklfj  \
 
-#### Heading2.1.1.2
+#### Heading
 helllllppppp  \
 
-## Heading 2.2
+## Heading
 Dskjkljklwerewr  \
 
-### Hading 2.2.2
+### Hading
 Poipoiewrp
