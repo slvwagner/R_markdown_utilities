@@ -17,7 +17,9 @@ data <- data.frame(
   Influence_Score = c(9, 7, 6)
 )
 # Create a bar chart using ggplot2
-plot <- ggplot(data, aes(x = Philosopher, y = Influence_Score, fill = Philosopher)) +
+plot <- data.frame(Philosopher = c("Sartre", "Camus", "Kierkegaard"),
+                   Influence_Score = c(9, 7, 6))|>
+    ggplot(aes(x = Philosopher, y = Influence_Score, fill = Philosopher)) +
   geom_bar(stat = "identity") +
   labs(title = "Influence of Existentialist Philosophers", y = "Influence Score") +
   theme_minimal()
