@@ -1,7 +1,7 @@
 # Enhance R markdown files with Tabel of contents
 # Add on a Structure numbering by create_nb = TRUE
 
-r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE) {
+r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, nb_front = TRUE) {
   ##########################################################################
   # table of contents
   headings <- c_Rmd[stringr::str_detect(c_Rmd, "#")]|>stringr::str_remove_all("#")|>stringr::str_trim()
@@ -143,22 +143,42 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE) {
   c_Heading <- df_data[df_data$is.heading, ]$c_Rmd
   
   c_ancor <- ""
-  if(create_nb) {
-    c_ancor <- paste0(
-      c_Heading,
-      " ",c_nb,
-      "<a name=\"",
-      c_Heading|> stringr::str_remove_all("#") |>stringr::str_trim(),
-      " ",c_nb,
-      "\"></a>"
-    )
-  }else {
-    c_ancor <- paste0(
-      c_Heading,
-      "<a name=\"",
-      c_Heading|> stringr::str_remove_all("#") |>stringr::str_trim(),
-      "\"></a>"
-    )
+  if(nb_front) { # number in front of heading
+    if (create_nb) { # Include number system
+      c_ancor <- paste0(
+        c_Heading |> stringr::str_extract_all("#",simplify = TRUE)," " ,c_nb, " ", c_Heading |> stringr::str_remove_all("#") |> stringr::str_trim(),
+        "<a name=\"",
+        c_nb, " ", c_Heading |> stringr::str_remove_all("#") |> stringr::str_trim(),
+        "\"></a>"
+      )
+    } else { # Do not Include number system
+      c_ancor <- paste0(
+        c_Heading,
+        "<a name=\"",
+        c_Heading |> stringr::str_remove_all("#") |> stringr::str_trim(),
+        "\"></a>"
+      )
+    }
+  }else{ # heading flowed by number
+    if (create_nb) { # Include number system
+      c_ancor <- paste0(
+        c_Heading,
+        " ",
+        c_nb,
+        "<a name=\"",
+        c_Heading |> stringr::str_remove_all("#") |> stringr::str_trim(),
+        " ",
+        c_nb,
+        "\"></a>"
+      )
+    } else { # Do not Include number system
+      c_ancor <- paste0(
+        c_Heading,
+        "<a name=\"",
+        c_Heading |> stringr::str_remove_all("#") |> stringr::str_trim(),
+        "\"></a>"
+      )
+    }
   }
   # print(c_ancor)
   
@@ -167,13 +187,21 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE) {
   c_Heading <- c_Heading|> stringr::str_remove_all("#")|>stringr::str_trim()
   c_Heading
   c_toc <- ""
-  if(create_nb) {
-    c_toc <- paste0("[",c_Heading," ",c_nb,"](#", c_Heading," ",c_nb,")"
-    )
-  }else {
-    c_toc <- paste0("[",c_Heading,"](#", c_Heading,")"
-    )
+  
+  if(nb_front) {# number in front of heading
+    if (create_nb) {
+      c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#", c_nb," ", c_Heading, ")")
+    } else {
+      c_toc <- paste0("[", c_Heading, "](#", c_Heading, ")")
+    }
+  }else{ # heading flowed by number
+    if (create_nb) {
+      c_toc <- paste0("[", c_Heading, " ", c_nb, "](#", c_Heading, " ", c_nb, ")")
+    } else {
+      c_toc <- paste0("[", c_Heading, "](#", c_Heading, ")")
+    }
   }
+  
   # offset toc according to heading structure
   c_toc <- paste0(c_add_structure, c_toc)
   # print(c_toc)
