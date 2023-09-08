@@ -130,7 +130,6 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE) {
   
   # print(m__)
   
-  
   ##########################################################################
   # create structure number
   c_nb <- m__|>
@@ -177,7 +176,6 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE) {
   }
   # offset toc according to heading structure
   c_toc <- paste0(c_add_structure, c_toc)
-  
   # print(c_toc)
   
   #########################################################################
