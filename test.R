@@ -60,7 +60,7 @@ browseURL(paste0("output/00",cnt,".html"))
 
 #############################################################
 cnt <- cnt + 1
-r_toc_for_Rmd(c_Rmd, create_nb = FALSE, create_top_link = TRUE , nb_front = T)|>
+r_toc_for_Rmd(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = T)|>
   write(paste0("output/00",cnt,".Rmd"))
 
 browseURL(paste0("output/00",cnt,".Rmd"))
@@ -74,7 +74,7 @@ browseURL(paste0("output/00",cnt,".html"))
 
 #############################################################
 cnt <- cnt + 1
-r_toc_for_Rmd(c_Rmd, create_nb = FALSE, create_top_link = FALSE , nb_front = T)|>
+r_toc_for_Rmd(c_Rmd, create_nb = TRUE, create_top_link = FALSE , nb_front = T)|>
   write(paste0("output/00",cnt,".Rmd"))
 
 browseURL(paste0("output/00",cnt,".Rmd"))
