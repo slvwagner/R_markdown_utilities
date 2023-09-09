@@ -165,11 +165,11 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
       c_ancor <- paste0(
         c_Heading_level," " , c_nb, " ", c_Heading ,
         "<a name=\"",
-        c_nb, " ", c_Heading ,
+        "A_", c_nb, "_", c_Heading ,
         "\"></a>",
         if(create_top_link)"\n[Tabel of Content](#Tabel of Content)\n"
       )
-      c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#", c_nb," ", c_Heading, ")")
+      c_toc <- paste0("[", c_nb,  " ", c_Heading,"](#A_", c_nb,"_", c_Heading, ")")
     } else {  # heading flowed by number system
       c_ancor <- paste0(
         c_Heading_level, " " , c_Heading, " ", c_nb,
