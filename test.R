@@ -1,19 +1,19 @@
 
 rm(list = ls())
-source("tabel of contents for Markdown file.R")
-#library(slvwagner)
-
-# ##########################################################################
-# c_FileName <- "test"
-# c_Rmd <- paste0("input/",c_FileName, ".Rmd")|>
-#   readLines()|>
-#   suppressWarnings()
+#source("tabel of contents for Markdown file.R")
+library(slvwagner)
 
 ##########################################################################
-c_FileName <- "Moving-Head-Tracking-12"
-c_Rmd <- paste0("G:/Meine Ablage/50_Informatik/100_R/010_Private Projekte/Moving-Head-Tracking/",c_FileName, ".Rmd")|>
+c_FileName <- "test"
+c_Rmd <- paste0("input/",c_FileName, ".Rmd")|>
   readLines()|>
   suppressWarnings()
+
+# ##########################################################################
+# c_FileName <- "Moving-Head-Tracking-12"
+# c_Rmd <- paste0("G:/Meine Ablage/50_Informatik/100_R/010_Private Projekte/Moving-Head-Tracking/",c_FileName, ".Rmd")|>
+#   readLines()|>
+#   suppressWarnings()
 
 
 #############################################################
