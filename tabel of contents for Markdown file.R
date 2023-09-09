@@ -2,14 +2,33 @@
 # Add on a Structure numbering by create_nb = TRUE
 
 r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = FALSE) {
+
   ##########################################################################
-  # table of contents
+  # create dataframe to work with
+  p <- "^```"
+  
   df_data <- data.frame(index = 1:length(c_Rmd),
                         c_Rmd,
+                        code_sections = lapply(c_Rmd, function(x) stringr::str_detect(x,p))|>unlist(),
                         is.heading = stringr::str_detect(c_Rmd, "^#")
   )
   
-  df_data$c_add <- rep("",nrow(df_data))
+  # search and exclude code sections
+  c_start_ii <- 0
+  for (ii in 1:nrow(df_data)) {
+    if (df_data$code_sections[ii] &  (c_start_ii != 0)) {
+      df_data$code_sections[c_start_ii:ii] <- rep(TRUE,length(c_start_ii:ii))
+      c_start_ii <- 0
+    } else if (df_data$code_sections[ii]) {
+      c_start_ii <- ii
+    }
+  }
+  
+  # remove heading in code section
+  df_data$is.heading <- ifelse(df_data$code_sections, FALSE, df_data$is.heading)
+  
+  # Store headings
+  # df_data$c_add <- rep("",nrow(df_data))
   df_data$`#` <- stringr::str_detect(df_data$c_Rmd, "^#\\s")|>ifelse(1,0)
   df_data$`##` <- stringr::str_detect(df_data$c_Rmd, "^##\\s")|>ifelse(1,0)
   df_data$`###` <- stringr::str_detect(df_data$c_Rmd, "^###\\s")|>ifelse(1,0)
@@ -177,7 +196,7 @@ r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_fr
   
   #########################################################################
   # Enhance headings
-  df_data_ <- dplyr::left_join(df_data[,1:3],
+  df_data_ <- dplyr::left_join(df_data[,1:4],
                                data.frame(index = rownames(m__)|>as.integer(),
                                           c_ancor),
                                by = "index")

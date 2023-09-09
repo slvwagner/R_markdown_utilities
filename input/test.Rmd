@@ -14,9 +14,19 @@ Das war ein Enter (Paragraph)  \
 
 ## Hading
 Das gehört zu Heading1.2 und somit auch korrekt.  \
+```{r}
+#testing code patch
+iris|>
+  plot()
+```
 
 # Heading
 Lllljjjdkkdkkd  \
+```{r}
+# Das ist ein weiterer Test
+print(iris)
+
+```
 
 ## Heading
 Kljsdklfjlksdf  \
