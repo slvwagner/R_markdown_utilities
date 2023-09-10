@@ -1,11 +1,17 @@
 
 rm(list = ls())
-#source("tabel of contents for Markdown file.R")
-library(slvwagner)
+source("tabel of contents for Markdown file.R")
+#library(slvwagner)
 
 ##########################################################################
 c_FileName <- "test"
 c_Rmd <- paste0("input/",c_FileName, ".Rmd")|>
+  readLines()|>
+  suppressWarnings()
+
+##########################################################################
+c_FileName <- "Machbarkeit grosse schwere Komponenten"
+c_Rmd <- paste0("G:/Meine Ablage/50_Informatik/100_R/001_Kunden/Essemtec/001_Projekte/Machbarkeit grosse schwere Komponenten/Kopfabhängigkeiten/",c_FileName, ".Rmd")|>
   readLines()|>
   suppressWarnings()
 
