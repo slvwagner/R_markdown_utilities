@@ -1,7 +1,7 @@
 # Enhance R markdown files with Table of contents
 # Add on a Structure numbering by create_nb = TRUE
 
-r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = FALSE) {
+r_toc_for_Rmd <- function(c_Rmd,create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"

@@ -1,7 +1,7 @@
 
 rm(list = ls())
-source("tabel of contents for Markdown file.R")
-#library(slvwagner)
+#source("tabel of contents for Markdown file.R")
+library(slvwagner)
 
 ##########################################################################
 c_FileName <- "test"
