@@ -7,7 +7,7 @@ r_is.defined <- function(sym) {
   exists(sym, env)
 }
 
-r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
+r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = TRUE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"
@@ -182,15 +182,17 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
   c_top_link <- paste0("\n[",c_toc_heading_string,"](#",c_toc_heading_string,")\n")
   
   if (set_first_heading_level & r_is.defined(push_front)) {
-    c_Heading_level <- switch(
-      push_front-1,
-      c_Heading_level = c_Heading_level|>stringr::str_remove("#"),
-      c_Heading_level = c_Heading_level|>stringr::str_remove("##"),
-      c_Heading_level = c_Heading_level|>stringr::str_remove("###"),
-      c_Heading_level = c_Heading_level|>stringr::str_remove("####"),
-      c_Heading_level = c_Heading_level|>stringr::str_remove("#####"),
-      c_Heading_level = c_Heading_level|>stringr::str_remove("######"),
-    )
+    if((push_front-1) != 0){
+      c_Heading_level <- switch(
+        push_front-1,
+        c_Heading_level = c_Heading_level|>stringr::str_remove("#"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("##"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("###"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("####"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("#####"),
+        c_Heading_level = c_Heading_level|>stringr::str_remove("######"),
+      )
+    }
     c_toc_heading <- paste0("# ")
   } else {
     c_toc_heading <- switch(
