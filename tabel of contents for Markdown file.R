@@ -7,7 +7,7 @@ r_is.defined <- function(sym) {
   exists(sym, env)
 }
 
-r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = TRUE) {
+r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE) {
   ##########################################################################
   # create dataframe to work with
   p <- "^```"
