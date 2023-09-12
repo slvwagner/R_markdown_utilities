@@ -71,7 +71,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
     }
   }
   
-  # find first heading 
+  # find first heading
   for (ii in 1:6) {
     if(m[1,ii]>0){
       first_heading_column <- ii
@@ -83,7 +83,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
   c_names <- c("#","##","###","####","#####","######")
   
   if(highest_order_jj != first_heading_column){
-    # correct structure 
+    # correct structure
     temp <- m[1:(highest_order_ii-1),first_heading_column:6]
     temp
     temp <- switch (first_heading_column ,
@@ -111,7 +111,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
     names(temp) <- c_names[highest_order_jj:6]
     m_ <- rbind(temp,temp1)
   }else{
-    if(highest_order_jj>0){ # remove not populated columns 
+    if(highest_order_jj>0){ # remove not populated columns
       m_ <- switch (highest_order_jj,
                     m_ = m,
                     m_ = cbind(m[,2:6],p1 = rep(0,nrow(m))),
@@ -164,7 +164,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
     }else{
       c_Heading_level[ii] <- c_names[jj + (highest_order_jj-1)]
     }
-    c_add_structure[ii] <- c_add[jj] 
+    c_add_structure[ii] <- c_add[jj]
     
   }
   
@@ -187,7 +187,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
   c_Heading
   
   ##########################################################################
-  # create anchor 
+  # create anchor
   if (create_nb) {
     if (nb_front) { # number system in front of heading
       c_anchor <- paste0(
@@ -237,7 +237,7 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
   
   
   #########################################################################
-  # create TOC 
+  # create TOC
   highest_order_jj <- ifelse(set_first_heading_level, 1, highest_order_jj)
   c_toc_link <- switch(highest_order_jj,
                        paste0(c_names[1]," ",c_toc_heading_string),
@@ -248,29 +248,32 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
                        paste0(c_names[6]," ",c_toc_heading_string)
   )
   
-  c_toc_link <- ifelse(create_top_link, 
+  c_toc_link <- ifelse(create_top_link,
                        paste0(c_toc_link, "<a name=\"", c_toc_heading_string, "\"></a>"),
                        c_toc_link)
   
   #########################################################################
   # find position to insert table of contents
-  check <- stringr::str_detect(c_Rmd, "```")
+  check <- stringr::str_detect(c_Rmd, "---")
+  c_start <- 1
+  cnt <- 0
   
   for (ii in 1:length(c_Rmd)) {
     if (check[ii]) {
       c_start <- ii
-      break
+      cnt <- cnt + 1
+      if(cnt == 2) break
     }
   }
   
   #########################################################################
   # Insert table of contents
   # insert table off contents
-  c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start - 1)],
+  c_Rmd <- c(df_data_$c_Rmd_ [1:(c_start)],
              c_toc_link,
              c_toc,
              "\n",
-             df_data_$c_Rmd_[c_start:nrow(df_data)]
+             df_data_$c_Rmd_[(c_start+1):nrow(df_data)]
   )
   return(c_Rmd)
 }
