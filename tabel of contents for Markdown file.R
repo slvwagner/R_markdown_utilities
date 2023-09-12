@@ -111,19 +111,20 @@ r_toc_for_Rmd <- function(c_Rmd, create_nb = TRUE, create_top_link = TRUE , nb_f
     names(temp) <- c_names[highest_order_jj:6]
     m_ <- rbind(temp,temp1)
   }else{
-    if(highest_order_jj>0){ # remove 
+    if(highest_order_jj>0){ # remove not populated columns 
       m_ <- switch (highest_order_jj,
-                    m_ = m_,
-                    m_ = cbind(m_[,2:6],p1 = rep(0,nrow(m_))),
-                    m_ = cbind(m_[,3:6],p1 = rep(0,nrow(m_)),p2 = rep(0,nrow(m_))),
-                    m_ = cbind(m_[,4:6],p1 = rep(0,nrow(m_)),p2 = rep(0,nrow(m_)),p3 = rep(0,nrow(m_))),
-                    m_ = cbind(m_[,5:6],p1 = rep(0,nrow(m_)),p2 = rep(0,nrow(m_)),p3 = rep(0,nrow(m_)),p4 = rep(0,nrow(m_))),
-                    m_ = cbind(m_[,6:6],p1 = rep(0,nrow(m_)),p2 = rep(0,nrow(m_)),p3 = rep(0,nrow(m_)),p4 = rep(0,nrow(m_)),p5 = rep(0,nrow(m_)))
+                    m_ = m,
+                    m_ = cbind(m[,2:6],p1 = rep(0,nrow(m))),
+                    m_ = cbind(m[,3:6],p1 = rep(0,nrow(m)),p2 = rep(0,nrow(m))),
+                    m_ = cbind(m[,4:6],p1 = rep(0,nrow(m)),p2 = rep(0,nrow(m)),p3 = rep(0,nrow(m))),
+                    m_ = cbind(m[,5:6],p1 = rep(0,nrow(m)),p2 = rep(0,nrow(m)),p3 = rep(0,nrow(m)),p4 = rep(0,nrow(m))),
+                    m_ = cbind(m[,6:6],p1 = rep(0,nrow(m)),p2 = rep(0,nrow(m)),p3 = rep(0,nrow(m)),p4 = rep(0,nrow(m)),p5 = rep(0,nrow(m)))
       )
     }else{
       m_ <- m
     }
   }
+  m_
   
   ##########################################################################
   # create structure number system
