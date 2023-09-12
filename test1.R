@@ -1,5 +1,7 @@
 rm(list = ls())
 
+slvwagner::r_toc_for_Rmd
+
 source("tabel of contents for Markdown file.R")
 #library(slvwagner)
 
@@ -25,7 +27,6 @@ create_nb = TRUE
 create_top_link = TRUE
 nb_front = TRUE
 set_first_heading_level = TRUE
-
 
 #############################################################
 cnt <- 0
