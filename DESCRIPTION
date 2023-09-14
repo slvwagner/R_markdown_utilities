@@ -1,0 +1,28 @@
+Package: R_markdown_utilities
+Type: Package
+Title: Markdown utilities
+Version: 0.9.6.3
+Author: Florian Wagner
+Depends: R (>= 4.2.0)
+Maintainer: Florian Wagner <florian.wagner@wagnius.ch>
+Description: Create a Markdown file from word files (.docx)
+Including the structure of the file (Heading and Title)
+Create automatically table of contents for Markdown files
+Add automatically heading numbers
+Correct automatically heading structure
+Change heading structure to start with first heading
+Define the title manually, instead of table of contents you can use "Inhaltsverzeichnis"
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+Suggests: 
+    knitr,
+    rmarkdown,
+    stringi,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr, rmarkdown
+Config/testthat/edition: 3
+Imports: 
+    stringr
