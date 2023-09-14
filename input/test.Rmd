@@ -8,11 +8,11 @@ output:
     pdf_document: default
 ---
 
-# 1 Heading
+# Heading
 Das gehört zu Heading1. Das ist so korrekt.  \
 Das war ein Enter (Paragraph)  \
 
-## 56 Heading
+## Heading
 Das gehört zu Heading1.2 und somit auch korrekt.  \
 ```{r}
 #testing code patch

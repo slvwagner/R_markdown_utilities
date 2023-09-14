@@ -9,4 +9,5 @@
 -   Add automatically heading numbers
 -   Correct automatically heading structure 
 -   Change heading structure to start with first heading 
+-   Define the title manually, instead of table of contents you can use "Inhaltsverzeichnis"
  
