@@ -275,7 +275,7 @@ r_toc_for_Rmd <- function(
   m_pb <- switch (
     pagebreak_level,
     "non" = FALSE,
-    "1" = m[, 1:1]|>matrix(dimnames =list(row.names(m),"#")),
+    "1" = m[, 1:1]|>matrix(dimnames =list(row.names(m),"#"))|>as.data.frame(),
     "2" = m[, 1:2],
     "3" = m[, 1:3],
     "4" = m[, 1:4],
@@ -302,7 +302,6 @@ r_toc_for_Rmd <- function(
   
   return(c_Rmd)
 }
-
 
 create_df <- function(c_Rmd) {
   p <- "^```"
