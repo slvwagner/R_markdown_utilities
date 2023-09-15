@@ -2,7 +2,7 @@
 #' Automatically creates a table of contents for a .Rmd file
 #' @name r_toc_for_Rmd
 #' @description
-#' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file. 
+#' Scans documents for headings (#) and creates a table of contents (hyper linked). The returned string can directly be written as .Rmd file.
 #' All code section will be excluded for the (#) search.
 #' @details
 #' The function argument is a string of a R markdown .Rmd file which can be read via \code{readLines("fileName.Rmd")}.
@@ -12,7 +12,7 @@
 #' @param nb_front boolean to have the numbering in front of each heading.
 #' @param create_top_link boolean to create link below each heading to jump back to the table of contents.
 #' @param set_first_heading_level set first found heading level to heading 1
-#' @param pagebreak_level automatically add page breaks before new heading. Set the level to insert page breaks to e.g. c("non","1","2","3","4","5","6")
+#' @param pagebreak_level Automatically add page breaks before new heading. Set the level to insert page breaks to e.g. c("non","1","2","3","4","5","6")
 #' @return .Rmd file string
 #' @examples
 #' print(tbl_of_contents.Rmd)
@@ -23,14 +23,14 @@
 #' @export
 
 r_toc_for_Rmd <- function(
-    c_Rmd,   
+    c_Rmd,
     toc_heading_string = "Table of Contents" ,
     create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, set_first_heading_level = FALSE,
     pagebreak_level = "non"
-) 
+)
 {
   ##########################################################################
-  # create dataframe to work with
+  # create data frame to work with
   df_data <- create_df(c_Rmd)
   
   ##########################################################################
@@ -266,11 +266,27 @@ r_toc_for_Rmd <- function(
   #########################################################################
   # Insert page breaks
   
-  #create data frame to work with 
+  #create data frame to work with
   df_data <- create_df(c_Rmd)
   
   # Headings
   m <- df_data[df_data$is.heading, 5:ncol(df_data)]
+  
+  # Analyze heading structure
+  heading_struct <- m|>
+    apply(2, function(x) {
+      sum(x)>0
+    })
+  
+  # highest order heading column index
+  for (ii in 1:ncol(m)) {
+    if(heading_struct[ii]) {
+      highest_order_jj <- ii
+      break
+    }
+  }
+  
+  if(highest_order_jj > 1)  pagebreak_level <- (pagebreak_level|>as.integer() +  highest_order_jj - 1)|>as.character()
   
   m_pb <- switch (
     pagebreak_level,
@@ -303,6 +319,7 @@ r_toc_for_Rmd <- function(
   return(c_Rmd)
 }
 
+
 create_df <- function(c_Rmd) {
   p <- "^```"
   df_data <- data.frame(
@@ -329,7 +346,6 @@ create_df <- function(c_Rmd) {
   df_data$is.heading <- ifelse(df_data$code_sections, FALSE, df_data$is.heading)
   
   # Store headings
-  # df_data$c_add <- rep("",nrow(df_data))
   df_data$`#` <- stringr::str_detect(df_data$c_Rmd, "^#\\s") |> ifelse(1, 0)
   df_data$`##` <-  stringr::str_detect(df_data$c_Rmd, "^##\\s") |> ifelse(1, 0)
   df_data$`###` <- stringr::str_detect(df_data$c_Rmd, "^###\\s") |> ifelse(1, 0)
@@ -338,4 +354,3 @@ create_df <- function(c_Rmd) {
   df_data$`######` <- stringr::str_detect(df_data$c_Rmd, "^######\\s") |> ifelse(1, 0)
   return(df_data)
 }
-

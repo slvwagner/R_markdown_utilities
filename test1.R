@@ -22,21 +22,19 @@ c_Rmd <- paste0("input/",c_FileName, ".Rmd")|>
 #   suppressWarnings()
 
 
-
-
 #############################################################################
 create_nb = TRUE
 create_top_link = TRUE
 nb_front = TRUE
 set_first_heading_level = TRUE
 
-
+dir.create("output/")|>suppressWarnings()
 
 #############################################################
 cnt <- 0
 #############################################################
 cnt <- cnt + 1
-r_toc_for_Rmd(c_Rmd, toc_heading_string = "Inhaltsverzeichnis",create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, pagebreak_level = "non")|>
+r_toc_for_Rmd(c_Rmd, toc_heading_string = "Inhaltsverzeichnis",create_nb = TRUE, create_top_link = TRUE , nb_front = TRUE, pagebreak_level = "1")|>
   write(paste0("output/00",cnt,".Rmd"))
 # show .Rmd file
 # browseURL(paste0("output/00",cnt,".Rmd"))
