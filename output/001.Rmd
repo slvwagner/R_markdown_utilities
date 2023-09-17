@@ -1,88 +1,1025 @@
 ---
-title: "Rmarkdown input"
+title: "Analyse zum Bestücken von grossen und schweren Bauteilen"
 author: "Florian Wagner"
-date: "2023-09-05"
+date: "20.06.2023"
 output:
-    html_document: default
-    word_document: default
-    pdf_document: default
+  html_document: default
+  word_document: default
 ---
-# Inhaltsverzeichnis<a name="Inhaltsverzeichnis"></a>
-* [1 Heading](#A_1_Heading)
-    + [1.1 Heading](#A_1.1_Heading)
-* [2 Heading](#A_2_Heading)
-    + [2.1 Heading](#A_2.1_Heading)
-        + [2.1.1 Heading](#A_2.1.1_Heading)
-        + [2.1.2 Heading](#A_2.1.2_Heading)
-            + [2.1.2.1 Heading](#A_2.1.2.1_Heading)
-            + [2.1.2.2 Heading](#A_2.1.2.2_Heading)
-    + [2.2 Heading](#A_2.2_Heading)
-        + [2.2.1 Hading](#A_2.2.1_Hading)
+## Table of Contents
+* [Introduction 1](#A_Introduction 1)
+    + [RFNS Bauteile 1.1](#A_RFNS Bauteile 1.1)
+    + [Testing Material bei der Entwicklung Head V3 1.2](#A_Testing Material bei der Entwicklung Head V3 1.2)
+    + [Massenträgheit der Theta-Achse 1.3](#A_Massenträgheit der Theta-Achse 1.3)
+        + [Summe aller Massenträgheitsmomente der Theta-Achse 1.3.1](#A_Summe aller Massenträgheitsmomente der Theta-Achse 1.3.1)
+    + [Verhältniss der Massenträgheitsmomente 1.4](#A_Verhältniss der Massenträgheitsmomente 1.4)
+    + [Conclusion 1.5](#A_Conclusion 1.5)
+* [Entwicklungsansätze Massenträgheit 2](#A_Entwicklungsansätze Massenträgheit 2)
+    + [Theta-Achse mit Wolfram Schwungmasse 2.1](#A_Theta-Achse mit Wolfram Schwungmasse 2.1)
+        + [Summe aller Massenträgheitsmomente 2.1.1](#A_Summe aller Massenträgheitsmomente 2.1.1)
+    + [Verhältniss der Massenträgheitsmomente 2.2](#A_Verhältniss der Massenträgheitsmomente 2.2)
+    + [Conclusion 2.3](#A_Conclusion 2.3)
+    + [Nozzle mit viel Massenträgheitsmoment V1 2.4](#A_Nozzle mit viel Massenträgheitsmoment V1 2.4)
+        + [Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.4.1](#A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.4.1)
+        + [Verhältniss der Massenträgheitsmomente 2.4.2](#A_Verhältniss der Massenträgheitsmomente 2.4.2)
+    + [Nozzle mit viel Massenträgheitsmoment V1.1 (Wolfram Nozzle und Schwungmasse) 2.5](#A_Nozzle mit viel Massenträgheitsmoment V1.1 (Wolfram Nozzle und Schwungmasse) 2.5)
+        + [Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.5.1](#A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.5.1)
+        + [Verhältniss der Massenträgheitsmomente 2.5.2](#A_Verhältniss der Massenträgheitsmomente 2.5.2)
+    + [Nozzle mit viel Massenträgheitsmoment V2 2.6](#A_Nozzle mit viel Massenträgheitsmoment V2 2.6)
+        + [Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.6.1](#A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.6.1)
+        + [Verhältniss der Massenträgheitsmomente 2.6.2](#A_Verhältniss der Massenträgheitsmomente 2.6.2)
+    + [Nozzle mit viel Massenträgheitsmoment V1.2 (Fix an Achsemontiert) 2.7](#A_Nozzle mit viel Massenträgheitsmoment V1.2 (Fix an Achsemontiert) 2.7)
+        + [Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.7.1](#A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.7.1)
+        + [Verhältniss der Massenträgheitsmomente 2.7.2](#A_Verhältniss der Massenträgheitsmomente 2.7.2)
+* [Versuche mit ESSA-111939 3](#A_Versuche mit ESSA-111939 3)
+    + [Versuche mit Nozzle 6 3.1](#A_Versuche mit Nozzle 6 3.1)
+    + [Conlusion 3.2](#A_Conlusion 3.2)
+* [Nozzlle-Aufnahmeprozess 4](#A_Nozzlle-Aufnahmeprozess 4)
+* [Untersuchen der Axial-Nozzel-Spindel-Abzugskraft 5](#A_Untersuchen der Axial-Nozzel-Spindel-Abzugskraft 5)
+    + [Versuch 5.1](#A_Versuch 5.1)
+    + [Resultat 5.2](#A_Resultat 5.2)
+    + [Berechnung Abzugskraft Nozzle durch Vakuum 5.3](#A_Berechnung Abzugskraft Nozzle durch Vakuum 5.3)
+    + [Berechnung Abzugskraft PLF Nozzle duch Vakuum 5.4](#A_Berechnung Abzugskraft PLF Nozzle duch Vakuum 5.4)
+    + [Axial-Nozzle-Abzugskraft für PLF Nozzlen 5.5](#A_Axial-Nozzle-Abzugskraft für PLF Nozzlen 5.5)
+        + [Totale Axiale-Nozzle-Abzugkraft für PLF Nozzlen 5.5.1](#A_Totale Axiale-Nozzle-Abzugkraft für PLF Nozzlen 5.5.1)
+    + [Axial-Nozzle-Federabzugkraft 5.6](#A_Axial-Nozzle-Federabzugkraft 5.6)
+        + [FEM-Simulation der Blattferder 5.6.1](#A_FEM-Simulation der Blattferder 5.6.1)
+            + [Nötige verformung 5.6.1.1](#A_Nötige verformung 5.6.1.1)
+            + [Kraft um verformung zu erreichen 5.6.1.2](#A_Kraft um verformung zu erreichen 5.6.1.2)
+        + [Conclusion 5.6.2](#A_Conclusion 5.6.2)
+    + [Messung der Haltekraft Nozzle in der Nozzle-Aufnahme 5.7](#A_Messung der Haltekraft Nozzle in der Nozzle-Aufnahme 5.7)
+        + [Versuch 5.7.1](#A_Versuch 5.7.1)
+        + [Resultat 5.7.2](#A_Resultat 5.7.2)
+    + [Conclusion 5.8](#A_Conclusion 5.8)
+* [Gewicht von Nozzle und Bauteil 6](#A_Gewicht von Nozzle und Bauteil 6)
+* [Conclusion 7](#A_Conclusion 7)
+* [Rotationsfehler der Theta-Achse 8](#A_Rotationsfehler der Theta-Achse 8)
+    + [Kundenbauteile 8.1](#A_Kundenbauteile 8.1)
+    + [Berechnungsparameter 8.2](#A_Berechnungsparameter 8.2)
+        + [Regelabweichung 8.2.1](#A_Regelabweichung 8.2.1)
+        + [Minimale Auflösung des Encoders [Deg] 8.2.2](#A_Minimale Auflösung des Encoders [Deg] 8.2.2)
+        + [Berechnung 8.2.3](#A_Berechnung 8.2.3)
+    + [Maximale Positions-Offsets 8.3](#A_Maximale Positions-Offsets 8.3)
+        + [Visualisierung 8.3.1](#A_Visualisierung 8.3.1)
+    + [Conclusion 8.4](#A_Conclusion 8.4)
+* [Planaritätsfehler vs Führungslänge der Nozzle 9](#A_Planaritätsfehler vs Führungslänge der Nozzle 9)
+    + [Berechnungsgrundlage 9.1](#A_Berechnungsgrundlage 9.1)
+    + [Mechanik 9.2](#A_Mechanik 9.2)
+        + [Durchmesserunterschied 9.2.1](#A_Durchmesserunterschied 9.2.1)
+    + [Parameter 9.3](#A_Parameter 9.3)
+    + [Maximaler Fehler 9.4](#A_Maximaler Fehler 9.4)
+    + [Nozzle-Achse-Führungslänge vs maximaler Bauteil-Radius 9.5](#A_Nozzle-Achse-Führungslänge vs maximaler Bauteil-Radius 9.5)
+        + [Verhältniss Führungslänge-Nozzle-Achse vs Bauteilradius 9.5.1](#A_Verhältniss Führungslänge-Nozzle-Achse vs Bauteilradius 9.5.1)
+    + [Conclusion 9.6](#A_Conclusion 9.6)
 
 
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+```
 
-\newpage
-# 1 Heading<a name="A_1_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+## Introduction 1<a name="A_Introduction 1"></a>
 
-Das gehört zu Heading1. Das ist so korrekt.  \
-Das war ein Enter (Paragraph)  \
+Für eine Kundenanfrage soll einen Machbarkeitsanalyse zum Bestücken von grossen und schweren Bauteilen gemacht werden. Diese Bauteile haben demnach ein grosses Massenträgheistmoment. Um einen Aussagen über die Regelbarkeit mit nur einem Parametersatz zu machen kann das Verhältnis zwischen dem Massenträgheitsmoment der Theta-Achse und dem Massenträgheitsmoment der Zuladung (zu bestückendes Bauteil) beurteilt werden.
 
-## 1.1 Heading<a name="A_1.1_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+Ein weiter Aspekt ist die minimal Axiale-Nozzle-Spindel-Abzugskraft die sicherlich viel grösser sein muss als das Gewicht des zu bestückenden Bauteils. In anderen Worten wie stark wird die Nozzlen and der Achse gehalten. Diese Kraft muss grösser sein als das Gewicht des Bauteils, Gewicht der Nozzle und die dynamischen Kräfte die dazukommen wenn Bauteil und Nozzle Beschleunigt werden.
 
-Das gehört zu Heading1.2 und somit auch korrekt.  \
-```{r}
-#testing code patch
-iris|>
-  plot()
+### RFNS Bauteile 1.1<a name="A_RFNS Bauteile 1.1"></a>
+
+Die Kundenanforderung an Bauteilen die mit dem derzeitigen System Head V6 nicht bestückt werden konnten nach Versuchen von STB, PAS.
+
+```{r echo=FALSE}
+
+df_rfns <- read_excel("RFNS Komponenten.xlsx")
+
+df_rfns|>
+  knitr::kable()
+```
+
+### Testing Material bei der Entwicklung Head V3 1.2<a name="A_Testing Material bei der Entwicklung Head V3 1.2"></a>
+
+Komponenten die bei der Entwicklung des Bestückkopf V3 zum Testen der Regelbarkeit (Regelparameter) verwendet wurden.\
+Bauteil **ESSP-119053** ist nicht mehr Regelbar nach den neusten Versuchen von JOM.
+
+```{r echo=FALSE}
+tibble(l_mm = c(rep(38,2),
+                rep(56,2),
+                rep(90,2)),
+       b_mm = c(rep(38,2),
+                rep(40,2),
+                rep(55,2)),
+       h_mm = c(rep(3.42,2),
+                rep(11.496,2),
+                rep(5.289,2)),
+       pickOffset_x_mm = rep(c(0,5),3),
+       pickOffset_y_mm = rep(c(0,5),3),
+       Masse_g = c(rep(11.51,2),
+                  rep(60,2),
+                  rep(61,2)),
+       `J_g*cm^2` = c(27.69,33.45,
+                      236.80, 266.80,
+                      565.53, 596.03),
+       Part_nb = c(rep("ESSP-119050",2),
+                   rep("ESSP-119051",2),
+                   rep("ESSP-119053", 2)),
+       Material = rep("Silizium",6),
+       `Dichte_g/cm^3` = rep(2.33,6),
+       RFNS = rep(F,6)
+       ) -> df_old
+df_old <- df_old|>
+  select(Part_nb, Material,contains("mm"),`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+
+df_old|>
+  knitr::kable()
+  
+```
+
+```{r include=FALSE}
+df <- df_rfns|>
+  bind_rows(df_old) -> df
+df|>
+  knitr::kable()
+```
+
+### Massenträgheit der Theta-Achse 1.3<a name="A_Massenträgheit der Theta-Achse 1.3"></a>
+
+Alle Elemente wurden mit CAD bezüglich Masse und Massenträgheitsmoment untersucht.
+
+```{r echo=FALSE}
+l_theta_Achse <- list()
+tibble(Part_nb = "NT-1002360",
+       Part_name = "Schrägkugellager",
+       Masse_g = NA,
+       `J_g*cm^2` = 0.5,
+       Material = "1.2510 (100MnCrW4)",
+       `Dichte_g/cm^3` = 7850
+       ) -> l_theta_Achse[[1]]
+
+tibble(Part_nb = "ESSP-110116",
+       Part_name = "Welle V5",
+       Masse_g = 25.7249,
+       `J_g*cm^2` = 1.2,
+       Material = "1.3505 (100Cr6)",
+       `Dichte_g/cm^3` = 7850
+       ) -> l_theta_Achse[[2]] 
+
+tibble(Part_nb = "ESSP-109378",
+       Part_name = "Schwungmasse V4/V5",
+       Masse_g = 32.77,
+       `J_g*cm^2` = 16.72,
+       Material = "Neusilber CW400J",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[3]] 
+
+tibble(Part_nb = "ESSA-104021",
+       Part_name = "Achse Hakensystem kompl. V4",
+       Masse_g = 4.46,
+       `J_g*cm^2` = 0.19,
+       Material = "Stahl",
+       `Dichte_g/cm^3` = 7800
+       ) -> l_theta_Achse[[4]] 
+
+tibble(Part_nb = "88.000006",
+       Part_name = "Federbalgkupplung",
+       Masse_g = 2.8,
+       `J_g*cm^2` = 0.45,
+       Material = "Chromstahl",
+       `Dichte_g/cm^3` = 7800
+       ) -> l_theta_Achse[[5]] 
+
+tibble(Part_nb = "ESSA-106421",
+       Part_name = "Kupplung KTR Rotex GS 5 98° Shore A",
+       Masse_g = 2.47,
+       `J_g*cm^2` = 0.33,
+       Material = "Alu, Kunstoff, Stahl",
+       `Dichte_g/cm^3` = 3000
+       ) -> l_theta_Achse[[6]] 
+
+tibble(Part_nb = "NT-1008014",
+       Part_name = "Maxon DXC 16 36V mit RIO Encoder",
+       Masse_g = NA,
+       `J_g*cm^2` = 1.01,
+       Material = "NA",
+       `Dichte_g/cm^3` = 7800
+       ) -> l_theta_Achse[[7]] 
+
+df_theta <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta|>
+  knitr::kable()
+
+```
+
+#### Summe aller Massenträgheitsmomente der Theta-Achse 1.3.1<a name="A_Summe aller Massenträgheitsmomente der Theta-Achse 1.3.1"></a>
+
+```{r echo=FALSE}
+df_sum <- df_theta|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
+
+### Verhältniss der Massenträgheitsmomente 1.4<a name="A_Verhältniss der Massenträgheitsmomente 1.4"></a>
+
+Um einen Aussage der Regelbarkeit zu machen kann das Verhältnis des Massenträgheismomentes der Theta-Achse zur Zuladung also den Bauteilen die Bestückt werden müssen beurteilt werden.
+
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
+```
+
+```{r echo=FALSE}
+df_ratio <- df|>
+  filter(pickOffset_x_mm == 5)|>
+  mutate(ratio_J_to_J_sum = `J_g*cm^2`/J_sum)|>
+  select(Part_nb,contains("mm"), Masse_g, `J_g*cm^2`,ratio_J_to_J_sum)
+df_ratio|>
+  knitr::kable()
+
+```
+
+Das Verhältnis zwischen Theta-Achsen-Massenträgheitsmoment und Zuladung ist in der Tabelle in der Spalte **ratio_J_to_J_sum** ersichtlich.
+
+### Conclusion 1.5<a name="A_Conclusion 1.5"></a>
+
+Bei einer Zuladung um Faktor `r df_ratio$ratio_J_to_J_sum[nrow(df_ratio)-1]|>signif(3)` ist die Regelbarkeit bei den alten Messungen noch gewährleistet.\
+Die Regelbarkeit bei Faktor `r df_ratio$ratio_J_to_J_sum[nrow(df_ratio)]|>signif(3)` ist nach alten und neusten Versuchen von Jom nicht gegeben.
+
+## Entwicklungsansätze Massenträgheit 2<a name="A_Entwicklungsansätze Massenträgheit 2"></a>
+
+Um das Verhältniss der Massenträgheiten zu verändern, könnte die Schwungmasse aus dichterem Material (schwerer) hergestellt werden ohne weitere Änderungen der Mechanik.
+
+### Theta-Achse mit Wolfram Schwungmasse 2.1<a name="A_Theta-Achse mit Wolfram Schwungmasse 2.1"></a>
+
+```{r echo=FALSE}
+tibble(Part_nb = "ESSP-119052",
+       Part_name = "Schwungmasse Wolfram",
+       Masse_g = 73.87,
+       `J_g*cm^2` = 37.69,
+       Material = "Wolfram",
+       `Dichte_g/cm^3` = 19000
+       ) -> l_theta_Achse[[3]]
+
+df_theta_heavy <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta_heavy|>
+  knitr::kable()
+```
+
+#### Summe aller Massenträgheitsmomente 2.1.1<a name="A_Summe aller Massenträgheitsmomente 2.1.1"></a>
+
+```{r echo=FALSE}
+df_sum <- df_theta_heavy|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
+
+### Verhältniss der Massenträgheitsmomente 2.2<a name="A_Verhältniss der Massenträgheitsmomente 2.2"></a>
+
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
+```
+
+```{r echo=FALSE}
+df_ratio <- df|>
+  filter(pickOffset_x_mm == 5)|>
+  mutate(ratio_J_to_J_sum = `J_g*cm^2`/J_sum)|>
+  select(Part_nb,contains("mm"), Masse_g, `J_g*cm^2`,ratio_J_to_J_sum)
+df_ratio|>
+  knitr::kable()
+```
+
+### Conclusion 2.3<a name="A_Conclusion 2.3"></a>
+
+Wie bereit angemerkt ist die Regelbarkeit bis zu einem Verhältnis von `r df_ratio|>select("ratio_J_to_J_sum")|>slice(nrow(df_ratio))|>pull()>signif(3)` sicher Regelbar.\
+Die Bauteile **ESSP-119050, ESSP-119051, ESSP-119053** sind demnach Regelbar da die Verhältnisse nicht grösser als `r df_ratio$ratio_J_to_J_sum[5]|>signif(3)` sind.\
+Die Kundenbauteile **ESSP-119048, ESSP-119049** sind wahrscheinlich nicht Regelbar.
+
+### Nozzle mit viel Massenträgheitsmoment V1 2.4<a name="A_Nozzle mit viel Massenträgheitsmoment V1 2.4"></a>
+
+Um einen Nozzle mit viel Massenträgheitsmoment einzusetzen müssten die Regelparameter beim Picken der Nozzle im Toolchanger dynamisch umgestellt werden (Idee von STB).
+
+Alle Elemente wurden mit CAD bezüglich Masse und Massenträgheitsmoment untersucht.
+
+![](Bilder/ESSA-111859.PNG){width="326"}
+
+```{r echo=FALSE}
+tibble(Part_nb = "ESSP-109378",
+       Part_name = "Schwungmasse V4/V5",
+       Masse_g = 32.77,
+       `J_g*cm^2` = 16.72,
+       Material = "Neusilber CW400J",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[3]] 
+
+tibble(Part_nb = "ESSA-111859",
+       Part_name = "2 x Pad Nozzle heavy components",
+       Masse_g = 37.53,
+       `J_g*cm^2` = 31.69,
+       Material = "Neusilber, ",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[8]] 
+
+
+df_theta_addNozzle <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta_addNozzle|>
+  knitr::kable()
+
+```
+
+```{r include=FALSE}
+names(l_theta_Achse) <- df_theta_addNozzle$Part_nb
+```
+
+**Die Nozzle ESSA-111859 wurde dem Massenträgheitsmoment der Theta-Achse hinzugefügt.**
+
+#### Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.4.1<a name="A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.4.1"></a>
+
+```{r echo=FALSE}
+df_sum <- df_theta_addNozzle|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
+
+#### Verhältniss der Massenträgheitsmomente 2.4.2<a name="A_Verhältniss der Massenträgheitsmomente 2.4.2"></a>
+
+Um einen Aussage der Regelbarkeit zu machen kann das Verhältnis des Massenträgheitsmomentes der Theta-Achse zur Zuladung also den Bauteilen die Bestückt werden müssen beurteilt werden.
+
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
+```
+
+```{r echo=FALSE}
+df_ratio <- df|>
+  filter(pickOffset_x_mm == 5)|>
+  mutate(ratio_J_to_J_sum = `J_g*cm^2`/J_sum)|>
+  select(Part_nb,contains("mm"), Masse_g, `J_g*cm^2`,ratio_J_to_J_sum)
+df_ratio|>
+  knitr::kable()
+```
+
+### Nozzle mit viel Massenträgheitsmoment V1.1 (Wolfram Nozzle und Schwungmasse) 2.5<a name="A_Nozzle mit viel Massenträgheitsmoment V1.1 (Wolfram Nozzle und Schwungmasse) 2.5"></a>
+
+Um einen Nozzle mit viel Massenträgheitsmoment einzusetzen müssten die Regelparameter beim Picken der Nozzle im Toolchanger dynamisch umgestellt werden (Idee von STB).
+
+Alle Elemente wurden mit CAD bezüglich Masse und Massenträgheitsmoment untersucht.
+
+![](Bilder/ESSA-111936.PNG){width="326"}
+
+```{r echo=FALSE}
+tibble(Part_nb = "ESSP-111936",
+       Part_name = "Schwungmasse Wolfram",
+       Masse_g = 73.87,
+       `J_g*cm^2` = 37.69,
+       Material = "Wolfram",
+       `Dichte_g/cm^3` = 19000
+       ) -> l_theta_Achse[[3]]
+
+tibble(Part_nb = "ESSA-111936",
+       Part_name = "2 x Pad Nozzle heavy components",
+       Masse_g = 78.93,
+       `J_g*cm^2` = 66.80,
+       Material = "PEEK, Wolfram",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[8]] 
+
+
+df_theta_addNozzle <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta_addNozzle|>
+  knitr::kable()
+
+```
+
+```{r include=FALSE}
+names(l_theta_Achse) <- df_theta_addNozzle$Part_nb
+```
+
+**Die Nozzle ESSA-119052 wurde dem Massenträgheitsmoment der Theta-Achse hinzugefügt.**
+
+#### Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.5.1<a name="A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.5.1"></a>
+
+```{r echo=FALSE}
+df_sum <- df_theta_addNozzle|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
+
+#### Verhältniss der Massenträgheitsmomente 2.5.2<a name="A_Verhältniss der Massenträgheitsmomente 2.5.2"></a>
+
+Um einen Aussage der Regelbarkeit zu machen kann das Verhältnis des Massenträgheitsmomentes der Theta-Achse zur Zuladung also den Bauteilen die Bestückt werden müssen beurteilt werden.
+
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
 ```
 
 
-\newpage
-# 2 Heading<a name="A_2_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
 
-Lllljjjdkkdkkd  \
-```{r}
-# Das ist ein weiterer Test
-print(iris)
+### Nozzle mit viel Massenträgheitsmoment V2 2.6<a name="A_Nozzle mit viel Massenträgheitsmoment V2 2.6"></a>
+
+Um einen Nozzle mit viel Massenträgheitsmoment einzusetzen müssten die Regelparameter beim Picken der Nozzle im Toolchanger dynamisch umgestellt werden (Idee von STB).
+
+Alle Elemente wurden mit CAD bezüglich Masse und Massenträgheitsmoment untersucht. ![](Bilder/ESSA-111860.PNG){width="382"}
+
+```{r echo=FALSE}
+
+tibble(Part_nb = "ESSP-109378",
+       Part_name = "Schwungmasse V4/V5",
+       Masse_g = 32.77,
+       `J_g*cm^2` = 16.72,
+       Material = "Neusilber CW400J",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[3]] 
+
+tibble(Part_nb = "ESSA-111860",
+       Part_name = "2 x Pad Nozzle heavy components",
+       Masse_g = 58.53*2,
+       `J_g*cm^2` = 86.65*2,
+       Material = "Neusilber",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[8]] 
+
+df_theta_addNozzle <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta_addNozzle|>
+  knitr::kable()
 
 ```
 
-## 2.1 Heading<a name="A_2.1_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+```{r include=FALSE}
+names(l_theta_Achse) <- df_theta_addNozzle$Part_nb
+```
 
-Kljsdklfjlksdf  \
+**Die Nozzle ESSA-111859 wurde dem Massenträgheitsmoment der Theta-Achse hinzugefügt.**
 
-### 2.1.1 Heading<a name="A_2.1.1_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+#### Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.6.1<a name="A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.6.1"></a>
 
-Jkljlsdfljklkljjkldasfölölkölsdf. Kjkldjskljkldjf  \
+```{r echo=FALSE}
+df_sum <- df_theta_addNozzle|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
 
-### 2.1.2 Heading<a name="A_2.1.2_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+#### Verhältniss der Massenträgheitsmomente 2.6.2<a name="A_Verhältniss der Massenträgheitsmomente 2.6.2"></a>
 
-745684564dfgdfg  \
-dfgskljkljkldgf  \
+Um einen Aussage der Regelbarkeit zu machen kann das Verhältnis des Massenträgheismomentes der Theta-Achse zur Zuladung also den Bauteilen die Bestückt werden müssen beurteilt werden.
 
-#### 2.1.2.1 Heading<a name="A_2.1.2.1_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
+```
 
-Jlksdjflkdjklfj  \
+```{r echo=FALSE}
+df_ratio <- df|>
+  filter(pickOffset_x_mm == 5)|>
+  mutate(ratio_J_to_J_sum = `J_g*cm^2`/J_sum)|>
+  select(Part_nb,contains("mm"), Masse_g, `J_g*cm^2`,ratio_J_to_J_sum)
+df_ratio|>
+  knitr::kable()
+```
 
-#### 2.1.2.2 Heading<a name="A_2.1.2.2_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
 
-helllllppppp  \
+### Nozzle mit viel Massenträgheitsmoment V1.2 (Fix an Achsemontiert) 2.7<a name="A_Nozzle mit viel Massenträgheitsmoment V1.2 (Fix an Achsemontiert) 2.7"></a>
 
-## 2.2 Heading<a name="A_2.2_Heading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+Alle Elemente wurden mit CAD bezüglich Masse und Massenträgheitsmoment untersucht.
 
-Dskjkljklwerewr  \
+![](Bilder/fixed%20nozzle%204Pads.png){width="326"}
 
-### 2.2.1 Hading<a name="A_2.2.1_Hading"></a>
-[Inhaltsverzeichnis](#Inhaltsverzeichnis)
+```{r echo=FALSE}
+tibble(Part_nb = "ESSP-109378",
+       Part_name = "Schwungmasse V4/V5",
+       Masse_g = 32.77,
+       `J_g*cm^2` = 16.72,
+       Material = "Neusilber CW400J",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[3]] 
 
-Poipoiewrp
+tibble(Part_nb = "ESSA-111939",
+       Part_name = "6 x Pad Nozzle heavy components",
+       Masse_g = 148.049,
+       `J_g*cm^2` = 243.308,
+       Material = "Neusilber CW400J",
+       `Dichte_g/cm^3` = 8430
+       ) -> l_theta_Achse[[8]] 
+
+
+df_theta_addNozzle <- bind_rows(l_theta_Achse)|>
+  select(Part_nb, Part_name, Material,`Dichte_g/cm^3`,Masse_g, `J_g*cm^2`)
+df_theta_addNozzle|>
+  knitr::kable()
+
+```
+
+```{r include=FALSE}
+names(l_theta_Achse) <- df_theta_addNozzle$Part_nb
+```
+
+**Die Nozzle ESSA-119052 wurde dem Massenträgheitsmoment der Theta-Achse hinzugefügt.**
+
+#### Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.7.1<a name="A_Summe aller Massenträgheitsmomente der Theta-Achse mit schwerer Nozzle 2.7.1"></a>
+
+```{r echo=FALSE}
+df_sum <- df_theta_addNozzle|>
+  summarise(`g*cm^2` = sum(`J_g*cm^2`))
+df_sum|>
+  knitr::kable()
+```
+
+#### Verhältniss der Massenträgheitsmomente 2.7.2<a name="A_Verhältniss der Massenträgheitsmomente 2.7.2"></a>
+
+Um einen Aussage der Regelbarkeit zu machen kann das Verhältnis des Massenträgheitsmomentes der Theta-Achse zur Zuladung also den Bauteilen die Bestückt werden müssen beurteilt werden.
+
+```{r echo=FALSE}
+J_sum <- df_sum|>
+  select(`g*cm^2`)|>
+  pull()
+```
+
+```{r echo=FALSE}
+df_ratio <- df|>
+  filter(pickOffset_x_mm == 5)|>
+  mutate(ratio_J_to_J_sum = `J_g*cm^2`/J_sum)|>
+  select(Part_nb,contains("mm"), Masse_g, `J_g*cm^2`,ratio_J_to_J_sum)
+df_ratio|>
+  knitr::kable()
+```
+
+## Versuche mit ESSA-111939 3<a name="A_Versuche mit ESSA-111939 3"></a>
+
+Die Nozzle ESSA-111939 wurde hergestellt und aufgebaut.\
+Regelparameter für die Nozzle konnten einfach gefunden werden. Leider ändert die Zuladung das System sehr stark.\
+
+-   Gelb:   Nozzle \~ 250 [g\*cm\^2] mit Zuladung von \~ 220 [g\*cm\^2]
+-   Orange: Nozzle \~ 250 [g\*cm\^2] mit Zuladung von \~ 90 [g\*cm\^2]
+-   Rot:    Nozzle \~ 250 [g\*cm\^2]
+
+![](Bilder/bode 20plot 1.png)\    
+\
+Zum Vergleichen ein Bodeplot der standard Theta-Achse ohne Nozzle.
+
+![](Bilder/Bodeplot_std_achse.png)
+
+### Versuche mit Nozzle 6 3.1<a name="A_Versuche mit Nozzle 6 3.1"></a>
+
+Um die Resultate mit Nozzle ESSA-111939 vergleichen zu können wurden die gleichen Messungen auch mit der Standardnozzle 6 gemacht.
+
+
+-   Gelb:   Nozzle 6 mit Zuladung von ~ 220 [g*cm^2]
+-   Orange: Nozzle 6 mit Zuladung von ~ 90 [g*cm^2]
+
+![](Bilder/nozzle6_90_220.png)\
+
+### Conlusion 3.2<a name="A_Conlusion 3.2"></a>
+
+Die Veränderung des Bodeplot mit unterschiedlichen Zuladungen ist sehr wahrscheinlich deshalb so gross da die Masse an der Achsenspitze angebracht ist. Diese Masse ist über den Federbalg (Kupplung) mit der Schwungmasse und dem Motor über eine Kupplung verbunden. Jetzt haben wir noch eine Masse die über einen Kupplung (Feder) das System beeinfluss. Das ist sehr ungünstig. Mit den Messungen mit Nozzle 6 ist das Problem auch bereits ersichtlich die Einbrüche sind nicht so ausgeprägt aber klar ersichtlich. Es ist also nicht sinnvoll grosse Massen mit dieser Achse zu bewegen. Es können demnach wohl auch nie grosse und schwere Bauteile Bestückt werden. \
+Es gibt keine einfache Lösung die Masse der bereits eingesetzten Schwungmasse dermassen zu vergrössern dass auch Bauteile mit grossem Massenträgheitsmoment bestückt werden können (siehe Theta-Achse mit Wolfram Schwungmasse).
+
+
+## Nozzlle-Aufnahmeprozess 4<a name="A_Nozzlle-Aufnahmeprozess 4"></a>
+
+Im Video wurde der Nozzle-Aufnahem Prozess visualisiert für PLF Nozzlen. Die Nozzle muss zuerst durch die Baltfeder vororientiert werden bevor die PLF-Klemmung und der Positionierstift zum Einsatz kommen.\
+
+![](Bilder/ESSA-110826.mp4){width="950"}
+
+## Untersuchen der Axial-Nozzel-Spindel-Abzugskraft 5<a name="A_Untersuchen der Axial-Nozzel-Spindel-Abzugskraft 5"></a>
+
+Die Haltekraft der Nozzlen an der Spindel setzt sich aus der Haltekraft der Blattfeder und der Kraft, die durch Ansaugen der Nozzle erzeugt wird (Nozzle mit Papierblat abgedichtet), zusammen. Wenn die Nozzle eine PLF-Version ist, dann ist die Haltekraft dramatisch grösser da die Klemmkraft durch die Verformumg der Nozzle dazu kommt.
+
+Ist die Haltekraft durch das Vakuum also das Ansaugen der Nozzel an die Spindel fuer alle Nozzlen **(nicht PLF)** gleich?
+
+### Versuch 5.1<a name="A_Versuch 5.1"></a>
+
+Abziehkraft von verschiedenen Nozzlen auf einer Achse ohne Blattfeder montiert von Hand abziehen und die benötigte Kraft beurteilen.
+
+### Resultat 5.2<a name="A_Resultat 5.2"></a>
+
+Nozzle 2, Nozzle 4, Nozzle RFNS Large mit Vakuum-Pads ESSA-111383 wurden untersucht. Es ist keine Veränderung der Abzugskraft bemerkbar.
+
+**Mit der Federwage gemessen ergeben sich rund 130g Axial-Nozzle-Achse-Abzukraft**.
+
+### Berechnung Abzugskraft Nozzle durch Vakuum 5.3<a name="A_Berechnung Abzugskraft Nozzle durch Vakuum 5.3"></a>
+
+![Die Dichtung ist die Zylindrische blau markierte Fläche, Die Wirksamefläche demnach vom Durchmesser der Achse abhängig.](Bilder/NonPLF_Dichtfläche.png){width="393"}
+\
+\
+Formel: $F\ =\ \Delta_{P}\cdot A$
+
+```{r}
+d <- 4 #[mm]
+deltaP <- 0.85 #[BAR]
+A <- ((d/2)/1000)^2*pi # [m^2]
+F_Vakuum <- (deltaP*100000) *A #[N]
+Gewicht <- F_Vakuum*9.81*10
+```
+
+```{r echo=FALSE}
+writeLines(paste0("Vakuum-Kraft: \n",signif(F_Vakuum,3),"  [N]\n",
+                 signif(Gewicht), "[Gramm]"))
+
+```
+
+### Berechnung Abzugskraft PLF Nozzle duch Vakuum 5.4<a name="A_Berechnung Abzugskraft PLF Nozzle duch Vakuum 5.4"></a>
+
+![Die Dichtung ist die Zylindrische blau markierte Fläche, Die Wirksamefläche demnach vom Durchmesser der Achse abhängig.](Bilder/PLF_Dichtfläche.png){width="393"}
+
+Formel:
+
+$F\ =\ \Delta_{P}\cdot A$
+
+```{r}
+d <- 2.9 #[mm]
+deltaP <- 0.85 #[BAR]
+A <- ((d/2)/1000)^2*pi # [m^2]
+F_Vakuum <- (deltaP*100000) *A #[N]
+Gewicht <- F_Vakuum*9.81*10
+```
+
+```{r echo=FALSE}
+writeLines(paste0("Vakuumkraft:  \n",signif(F_Vakuum,3)," [N]\n",
+                  signif(Gewicht,3), "  [Gramm]"))
+
+```
+
+### Axial-Nozzle-Abzugskraft für PLF Nozzlen 5.5<a name="A_Axial-Nozzle-Abzugskraft für PLF Nozzlen 5.5"></a>
+
+Die Nozzle-Achse V5-Abzugkraft PLF entsteht durch die Verformung der Nozzel. Je nach Übermass also Durchmesserunterschied der Achse V5 und dem Nozzle Body PLF. Je grösser der Durchmesserunterschied ist desto grösser ist die Axiale-Abzugkraft.
+
+![Minimale resultierende Kraft](Bilder/minKlemmKraftPLF.png)
+
+Die Nozzle-Spindel-Abzugkraft ist von der Reibung die abhängig also dem Haftreibungskoefizienten.
+
+```{r}
+Fres <- 12.4 #[N]
+mue <- 0.2 # Haftreibungskoeffizient 
+
+F_Axial_min_PLF <- Fres*mue
+
+```
+
+```{r echo=FALSE}
+writeLines(paste0("Nozzle-Spindel-Abzugkraft PLF Klemmung: \n", F_Axial_min_PLF, "    [N]\n",
+                   F_Axial_min_PLF*9.81*10, " [Gramm]\n"
+                  ))
+```
+
+#### Totale Axiale-Nozzle-Abzugkraft für PLF Nozzlen 5.5.1<a name="A_Totale Axiale-Nozzle-Abzugkraft für PLF Nozzlen 5.5.1"></a>
+
+Die Berechnete Kraft ist etwas keiner als die gemessenen was mit Reibung zu erklären ist. Leider ist die Nozzle-Spindel-Abzugkraft nur sehr klein. Es muss daran gedacht werden das noch dynamische Kräfte hinzukommen mit der Z-Achsen Bewegung.
+
+Der Kundenwunsch, das Bestücken von Bauteilen von **210 [Gramm]** kann wohl nicht mit den normalen Nozzlen gemacht werden. Die Blattfeder ist nicht für so etwas ausgelegt. Es ist also nötig eine Nozzle mit PLF-Klemmkraft zu entwickeln um diesem Problem zu entgehen.
+
+```{r echo=FALSE}
+F_tot_Axial <- F_Axial_min_PLF + F_Vakuum
+paste0("Vakuumkraft + Nozzle-Spindel-Abzugkraft PLF Klemmung: \n",signif(F_tot_Axial,3), " [N]\n",
+       signif(F_tot_Axial*9.81*10,3),"  [Gramm]")|>
+  writeLines()
+
+```
+
+### Axial-Nozzle-Federabzugkraft 5.6<a name="A_Axial-Nozzle-Federabzugkraft 5.6"></a>
+
+Wie wieviel Axial-Nozzle-Federabzugkraft kommt von der Blattfeder?
+
+#### FEM-Simulation der Blattferder 5.6.1<a name="A_FEM-Simulation der Blattferder 5.6.1"></a>
+
+**Bauteil:**\
+**96.17.36.258** wobei die Simulation als "96.17.36.258_für Simulation" gespeichert wurde.\
+
+##### Nötige verformung 5.6.1.1<a name="A_Nötige verformung 5.6.1.1"></a>
+
+![](Bilder/BlattfederAuslenkung.png){width="351"}
+
+```{r}
+auslenkung <- 0.19 # mm
+```
+
+##### Kraft um verformung zu erreichen 5.6.1.2<a name="A_Kraft um verformung zu erreichen 5.6.1.2"></a>
+
+![](Bilder/Simulation_BalltfederAuslenkung.png)
+
+```{r}
+Kraft <- 0.08 # [N]
+```
+
+Die Kraft von **`r Kraft` [N]** wird benötigt um die Verformung von **`r auslenkung` [mm]** zu erzeugen.
+
+#### Conclusion 5.6.2<a name="A_Conclusion 5.6.2"></a>
+
+```{r}
+alpha <- 150
+beta <- 180-alpha
+
+Axial_Kraft_Feder <- Kraft*sin(beta/180*pi)
+```
+
+Die Ferder trägt nicht fast nichts zu zur Nozzle-Achen-Abzugkraft bei.\
+Die Kräfte müssen noch mit den Winkel `r beta`[Deg] verrechnet werden.\
+\
+**Die Axial-Kraft die von der Feder kommt ist somit nur `r Axial_Kraft_Feder` [N].**
+
+
+### Messung der Haltekraft Nozzle in der Nozzle-Aufnahme 5.7<a name="A_Messung der Haltekraft Nozzle in der Nozzle-Aufnahme 5.7"></a>
+Die Haltekraft der Nozzlen an der Spindel setzt sich aus der Haltekraft der Blattfeder und der Kraft, die durch Ansaugen der Nozzle erzeugt wird (Nozzle mit Papierblat abgedichtet), zusammen.  Wenn die Nozzle eine PLF-Version ist, dann ist die Haltekraft dramatisch grösser da die Klemmkraft dazu kommt.  
+
+Ist die Haltekraft durch das Vakuum also das Ansaugen der Nozzel an die Spindel für alle Nozzlen gleich? 
+
+#### Versuch 5.7.1<a name="A_Versuch 5.7.1"></a>
+
+Abziehkraft von verschiedenen Nozzlen auf einer Achse ohne Blattfeder montiert von Hand abziehen und die benötigte Kraft beurteilen.  
+
+#### Resultat 5.7.2<a name="A_Resultat 5.7.2"></a>
+
+Nozzle 2, Nozzle 4, Nozzle RFNS Large mit Vakuum-Pads ESSA-111383 wurden untersucht. Es ist keine Veränderung der Abzugskraft bemerkbar.   
+
+Mit der Federwage gemessen ergeben sich rund 130g. 
+
+### Conclusion 5.8<a name="A_Conclusion 5.8"></a>
+
+Die Haltekraft die durch das Vakuum erzeugt wird ist für alle Nozzeln gleich. 
+
+
+
+## Gewicht von Nozzle und Bauteil 6<a name="A_Gewicht von Nozzle und Bauteil 6"></a>
+Um die Regelbarkeit der Theta-Achse zu gewährleisten muss einen sehr schwere Nozzle ESSA-111860 verwendet werden, ca. `r  l_theta_Achse[["ESSA-111860"]]$Masse_g` [Gramm].
+
+```{r}
+Gewicht_an_Achse <- l_theta_Achse[["ESSA-111860"]]$Masse_g + df_rfns$Masse_g[2] #[Gramm]
+```
+
+```{r echo=FALSE}
+paste0("Gewicht an der Achse: \n",signif(Gewicht_an_Achse/10/9.81,3), " [N]\n",
+       signif(Gewicht_an_Achse,3),"  [Gramm]")|>
+  writeLines()
+```
+
+## Conclusion 7<a name="A_Conclusion 7"></a>
+
+**Differenz des Gewichts von Nozzel und Bauteil und Axial-Spindel-Nozzle-Abzugkraft**.
+
+```{r}
+diff_Fg <- F_tot_Axial*9.81*10 - Gewicht_an_Achse
+```
+
+```{r echo=FALSE}
+paste(signif(diff_Fg,3), "[Gramm]")|>
+  writeLines()
+```
+
+**Die totale minimale Axial-Spindel-Nozzle-Abzugkraft ist für PLF Nozzlen ist für die minimalen durchmesser nicht ausreichend**, da in der Praxis noch dynamische Kräfte mit der Bewegung der Z-Achse hinzukommen.\
+Sobald das Übermass grösser gewählt wird ist die Klemmkraft der PLF Nozzlen ausreichend.
+
+Die Axial-Nozzle-Abzugskraft für **normale** Nozzlen ist **sicherlich nicht ausreichend.**
+
+## Rotationsfehler der Theta-Achse 8<a name="A_Rotationsfehler der Theta-Achse 8"></a>
+
+Der maximale Fehler der für sehr grosse Komponenten kann aus der Auflösung des Encoders und der grösse der Komponente berechnet werden.
+
+![](Bilder/max_offset_encoder.png){width="351"}
+
+```{r}
+df_rfns <- df_rfns|>
+  mutate(r = sqrt(2)*(l_mm/2))
+```
+
+### Kundenbauteile 8.1<a name="A_Kundenbauteile 8.1"></a>
+
+```{r echo=FALSE}
+df_rfns|>
+  filter(pickOffset_x_mm == 0)|>
+  knitr::kable()
+```
+
+### Berechnungsparameter 8.2<a name="A_Berechnungsparameter 8.2"></a>
+
+```{r}
+r <- df_rfns|>filter(pickOffset_x_mm == 0)|>select(r)|>pull() # [mm]
+inc_per_revolution <- 65536 # [increment]
+BGA_Ball_size <- 0.5 # [mm]
+```
+
+#### Regelabweichung 8.2.1<a name="A_Regelabweichung 8.2.1"></a>
+
+Messung einer Theta-Achse der Butterfly-Kopfgeneration (gleiche Theta-Hardware wie V6) durch Jom zeigt einen Regelabweichung von 10 Incrementen bei Stillstand. Das ist bereits sehr viel. Da kommen sicherlich noch ein paar Incremente hinzu denn wir wissen dass, einen Bewegung der Z-Achse Theta beeinflusst.\
+
+![](Bilder/Regelabweichung.png){width="850"}
+
+**Annahme:**\
+
+```{r}
+Regelabweichung <- 15 # [increment]
+```
+
+#### Minimale Auflösung des Encoders [Deg] 8.2.2<a name="A_Minimale Auflösung des Encoders [Deg] 8.2.2"></a>
+
+```{r echo=FALSE}
+writeLines(paste("Auflösung:\n",360/inc_per_revolution, "[Deg]"))
+```
+
+#### Berechnung 8.2.3<a name="A_Berechnung 8.2.3"></a>
+
+```{r}
+df_offsets <- tibble(Part_nb =df_rfns|>
+                       filter(pickOffset_x_mm == 0)|>
+                       select(Part_nb)|>
+                       pull(),
+                     r, inc_per_revolution, Regelabweichung, BGA_Ball_size)|>
+  mutate(x_pos = r,
+         y_pos = 0,
+         x_offset_per_inc = cos((2*pi)/inc_per_revolution)*r,
+         y_offset_per_inc = sin((2*pi)/inc_per_revolution)*r,
+         x_offset_Regelabweichung = cos(((2*pi)/inc_per_revolution)*Regelabweichung)*r,
+         y_offset_Regelabweichung = sin(((2*pi)/inc_per_revolution)*Regelabweichung)*r,
+         X_offset_per_inc_diff = x_pos-x_offset_per_inc,
+         Y_offset_per_inc_diff = y_pos-y_offset_per_inc,
+         X_offset_Regelabweichung_diff = x_pos-x_offset_Regelabweichung,
+         Y_offset_Regelabweichung_diff = y_pos-y_offset_Regelabweichung 
+         )
+```
+
+```{r include=FALSE}
+df_pos <- df_offsets|>
+  select(Part_nb,"x_pos")|>
+  pivot_longer(cols = -Part_nb, values_to = "x")|>
+  bind_cols(df_offsets|>
+              select("y_pos")|>
+              pivot_longer(everything(),names_to = "remove",values_to = "y"))|>
+  select(-remove)|>
+  mutate(name = str_remove(name, "x_"))
+
+df_pos|>
+  knitr::kable()
+```
+
+```{r include=FALSE}
+df_coord <- df_offsets|>
+  select(Part_nb,contains("x", ignore.case = F))|>
+  pivot_longer(cols = -Part_nb, values_to = "x")|>
+  bind_cols(df_offsets|>
+              select(contains("y", ignore.case = F))|>
+              pivot_longer(everything(),names_to = "remove",values_to = "y"))|>
+  select(-remove)|>
+  mutate(name = str_remove(name, "x_"))|>
+  filter(str_detect(name ,"offset"))
+
+df_coord|>
+  knitr::kable()
+```
+
+### Maximale Positions-Offsets 8.3<a name="A_Maximale Positions-Offsets 8.3"></a>
+Die Maximalen Positions-Offsets wurden für das grösste Bauteil berücksichtigt.  
+```{r echo=FALSE}
+df_labels <- df_offsets|>
+  select(Part_nb,contains("X", ignore.case = F))|>
+  pivot_longer(cols = -Part_nb, values_to = "x_offset")|>
+  bind_cols(df_offsets|>
+              select(contains("Y", ignore.case = F))|>
+              pivot_longer(everything(),names_to = "remove",values_to = "y_offset"))|>
+  select(-remove)|>
+  mutate(name = str_remove(name, "X_"),
+         r_offset = sqrt(x_offset^2+y_offset^2))
+
+df_labels|>
+  knitr::kable()
+```
+
+#### Visualisierung 8.3.1<a name="A_Visualisierung 8.3.1"></a>
+
+```{r echo=FALSE}
+library(ggforce)
+
+for(ii in 1:length(df_offsets$Part_nb)){
+  p <- df_coord|>
+    filter(Part_nb == df_offsets$Part_nb[ii])|>
+    ggplot(aes(x,y, color = name))+
+    geom_point()+
+    geom_point(data = df_pos|>
+                 filter(Part_nb == df_offsets$Part_nb[ii]), 
+               aes(x,y))+
+    geom_hline(yintercept = 0)+
+    geom_circle(aes(x0 = x, y0 = y,r = df_offsets$BGA_Ball_size[ii]/2))+
+    geom_circle(data = df_pos|>
+                 filter(Part_nb == df_offsets$Part_nb[ii]),
+                aes(x0 = x, y0 = y,r = df_offsets$BGA_Ball_size[ii]/2))+
+    # geom_label(data = df_labels|>
+    #              filter(Part_nb == df_offsets$Part_nb[ii]),
+    #            aes(label = name))+
+    coord_fixed()+
+    labs(title = df_offsets$Part_nb[ii],
+         subtitle = paste("Maximale Regelabweichung =",df_offsets$Regelabweichung, "[Encoder Inkrements]"))
+    
+  print(p)
+}
+
+```
+
+### Conclusion 8.4<a name="A_Conclusion 8.4"></a>
+
+```{r}
+c_max_offset <- df_labels$r_offset|>
+  max()
+
+```
+
+Die Encoderauflösung von **`r paste(inc_per_revolution)` [Encoder-Inkrementen]** ist ausreichend.\
+Problematisch ist allerdings dass grössere Regelabweichungen zu grossen Offsets führen.\
+Wenn davon ausgegangen wird das eine maximale **Regelabweichung von +/- `r Regelabweichung` [Encoder-Inkrementen]** bei der Positionierung vorliegen kann dann ist der **maximale Offset bereits `r signif(c_max_offset,3)` [mm]** .\
+\
+**Die Positionierungsgenauikeit der Theta-Achse ist kritsch zu bewerten**.
+
+## Planaritätsfehler vs Führungslänge der Nozzle 9<a name="A_Planaritätsfehler vs Führungslänge der Nozzle 9"></a>
+
+### Berechnungsgrundlage 9.1<a name="A_Berechnungsgrundlage 9.1"></a>
+
+![](Bilder/plan_error.png){width="350"}
+
+### Mechanik 9.2<a name="A_Mechanik 9.2"></a>
+
+![](Bilder/NozzleBody.png){width="351"} ![](Bilder/welle_V5.png){width="351"}
+
+#### Durchmesserunterschied 9.2.1<a name="A_Durchmesserunterschied 9.2.1"></a>
+
+Der maxiamale Durchmesserunterschied errechnet sich mit der grössten Nozzle und der kleinsten Achse.
+
+```{r}
+delta_d <- 4.016-(4-0.012)
+delta_d
+```
+
+### Parameter 9.3<a name="A_Parameter 9.3"></a>
+
+```{r}
+f_delta_x <- seq(0.001, 0.05, length.out = 20 )
+f_l <- c(3.1964, 7.5464)
+par_space <- expand.grid(f_delta_x = f_delta_x,f_l = f_l, r = signif(r,3))
+```
+
+### Maximaler Fehler 9.4<a name="A_Maximaler Fehler 9.4"></a>
+
+Der maximale Planlauf-Fehler $\Delta z$ kann mit dem maximalen Führungsfehler $f \Delta x$ sowie der Führungslänge $f_l$ der Nozzle an der Achse berechnet werden.
+
+```{r}
+alpha <- atan(f_delta_x/f_l)
+df_plan <- par_space|>
+  mutate(ratio = signif(r/f_l,3),
+         alpha = atan(f_delta_x/f_l),
+         x = r*cos(alpha),
+         z = r*sin(alpha),
+         delta_x = x-r,
+         delta_z = 0-z)|>
+  arrange(desc(ratio))
+```
+
+```{r eval=FALSE, include=FALSE}
+df_plan|>
+  select(f_delta_x, f_l, ratio, delta_z)|>
+  knitr::kable()
+```
+
+### Nozzle-Achse-Führungslänge vs maximaler Bauteil-Radius 9.5<a name="A_Nozzle-Achse-Führungslänge vs maximaler Bauteil-Radius 9.5"></a>
+
+Das Diagramm zeigt den Planlauffehlr $\Delta_z$ in Funktion der Führungslänge $f_{delta_x}$.\
+Es wird ein Bauteil pro Subdiagramm angezeigt. (Bauteil-Radi sind unterschiedlich)\
+**Der schwarze Strich zeigt die mögliche Auslenkung bei grösstem Spiel der Standard Nozzlen**.\
+\
+**Führungslänge** $f_l$ PLF: 3.2mm\
+**Führungslände** $f_l$ Standard: 7.6mm
+
+```{r echo=FALSE}
+df_plan|>
+  mutate(f_l = factor(f_l))|>
+  ggplot(aes(f_delta_x, delta_z, color = f_l))+
+  geom_point(show.legend = F)+
+  geom_line(show.legend = F)+
+  geom_vline(xintercept = delta_d,show.legend = F)+
+  labs(titel = paste())+
+  facet_grid(r~.)
+
+```
+
+#### Verhältniss Führungslänge-Nozzle-Achse vs Bauteilradius 9.5.1<a name="A_Verhältniss Führungslänge-Nozzle-Achse vs Bauteilradius 9.5.1"></a>
+
+```{r echo=FALSE}
+df_plan|>
+  distinct(ratio,.keep_all = T )|>
+  select(r, f_l, ratio)|>
+  knitr::kable()
+```
+
+### Conclusion 9.6<a name="A_Conclusion 9.6"></a>
+
+Der Paritätsfehler $\Delta z$ wird bei grossen Bauteilen sehr Schnell sehr gross. Das ist für den Bestückungsprozess problematisch das einen "Ecke" des Bauteils zuerst berührt und demnach das Bauteil unkontrolliert von der Nozzle abgerissen wird. Es wäre auch denkbar das sich das Bauteil auf der Nozzle verschiebt was nicht besser ist. Bei der derzeitigen Konstruktion mit so kurzen Führungslängen ist das als sehr kritisch zu bewerten.
